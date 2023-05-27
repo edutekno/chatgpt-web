@@ -5594,7 +5594,7 @@
                 await readChunk();
             } catch (e) {
                 if (e.message.indexOf("aborted") === -1) {
-                    notyf.error("访问接口失败，请检查接口！")
+                    notyf.error("Failed to access the interface")
                     stopLoading();
                 }
             }
@@ -5669,7 +5669,7 @@
                 data.push({role: "user", content: message});
             }
             requestEle.children[1].textContent = message;
-            if (chatsData[activeChatIdx].name === "新的会话") {
+            if (chatsData[activeChatIdx].name === "new session") {
                 if (message.length > 20) message = message.slice(0, 17) + "...";
                 chatsData[activeChatIdx].name = message;
                 activeChatEle.children[1].children[0].textContent = message;
@@ -5699,7 +5699,7 @@
         stopEle.onclick = stopLoading;
         clearEle.onclick = () => {
             if (editingIdx === void 0) {
-                if (noLoading() && confirmAction("是否清空会话?")) {
+                if (noLoading() && confirmAction("Clear the session?")) {
                     endSpeak();
                     if (systemRole) {data.length = 1}
                     else {data.length = 0}
