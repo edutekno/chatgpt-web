@@ -3564,8 +3564,8 @@
         const enhanceCode = (render, options = {}) => (...args) => {
             /* args = [tokens, idx, options, env, slf] */
             const {
-                btnText = "复制代码", // button text
-                successText = "复制成功", // copy-success text
+                btnText = "copy code", // button text
+                successText = "copy successfully", // copy-success text
                 successTextDelay = 2000, // successText show time [ms]
                 showCodeLanguage = true, // false | show code language
             } = options;
@@ -3682,7 +3682,7 @@
                     notyf.success("复制成功");
                 } else if (id === "delMd") {
                     if (noLoading()) {
-                        if (confirmAction("是否删除此消息?")) {
+                        if (confirmAction("Do you want to delete this message?")) {
                             chatlog.removeChild(chatlog.children[idx]);
                             idx = systemRole ? idx + 1 : idx;
                             let firstIdx = data.findIndex(item => {return item.role === "assistant"});
@@ -3721,16 +3721,16 @@
             ele.appendChild(mdOption);
             let optionWidth = existVoice >= 2 ? 140 : 105;
             mdOption.innerHTML += `<div class="optionItems" style="width:${optionWidth}px;left:-${optionWidth - 10}px">`
-                + (ele.className === "request" ? `<div data-id="editMd" class="optionItem" title="编辑">
+                + (ele.className === "request" ? `<div data-id="editMd" class="optionItem" title="edit">
                 <svg width="18" height="18"><use xlink:href="#chatEditIcon" /></svg>
-                </div>` : `<div data-id="refreshMd" class="refreshReq optionItem" title="刷新">
+                </div>` : `<div data-id="refreshMd" class="refreshReq optionItem" title="to refresh">
                 <svg width="16" height="16" ><use xlink:href="#refreshIcon" /></svg>
                 <svg width="16" height="16" ><use xlink:href="#halfRefIcon" /></svg>
                 </div>`) +
-                `<div data-id="copyMd" class="optionItem" title="复制">
+                `<div data-id="copyMd" class="optionItem" title="copy">
                 <svg width="20" height="20"><use xlink:href="#copyIcon" /></svg>
             </div>
-            <div data-id="delMd" class="optionItem" title="删除">
+            <div data-id="delMd" class="optionItem" title="delete">
                 <svg width="20" height="20"><use xlink:href="#delIcon" /></svg>
             </div>` + (existVoice >= 2 ? `<div data-id="downAudio" class="optionItem" title="下载语音">
                 <svg width="20" height="20"><use xlink:href="#downAudioIcon" /></svg>
@@ -3797,7 +3797,7 @@
         const updateFolder = (idx) => {
             let folderEle = folderListEle.children[idx];
             let childLen = folderData[idx].idxs.length;
-            folderEle.children[0].children[1].children[1].textContent = childLen + "个会话";
+            folderEle.children[0].children[1].children[1].textContent = childLen + "sessions";
             if (childLen) {folderEle.classList.add("expandFolder")}
             else {folderEle.classList.remove("expandFolder")}
         }
@@ -3919,7 +3919,7 @@
             }
         }
         const delFolder = (folderIdx, ele) => {
-            if (confirmAction("是否删除文件夹?")) {
+            if (confirmAction("Do you want to delete the folder?")) {
                 let delData = folderData[folderIdx];
                 let idxs = delData.idxs.sort();
                 ele.parentElement.remove();
@@ -3958,7 +3958,7 @@
         }
         const folderAddChat = (folderIdx, headEle) => {
             endAll();
-            let chat = {name: "新的会话", data: []};
+            let chat = {name: "new session", data: []};
             chatsData.push(chat);
             activeChatIdx = chatsData.length - 1;
             folderData[folderIdx].idxs.push(activeChatIdx);
@@ -4029,7 +4029,7 @@
             else {folderListEle.insertBefore(folderEle, folderListEle.firstChild)}
         }
         document.getElementById("newFolder").onclick = function () {
-            folderData.unshift({name: "新文件夹", idxs: []});
+            folderData.unshift({name: "new folder", idxs: []});
             folderEleAdd(0, false);
             updateChatIdxs();
             folderListEle.parentElement.scrollTop = 0;
@@ -4055,7 +4055,7 @@
                     <div class="chatName"></div>
                     <div class="chatPre"></div>
                 </div>
-                <div class="chatOption"><svg data-type="chatEdit" width="24" height="24" role="img"><title>编辑</title><use xlink:href="#chatEditIcon" /></svg>
+                <div class="chatOption"><svg data-type="chatEdit" width="24" height="24" role="img"><title>edit</title><use xlink:href="#chatEditIcon" /></svg>
                 <svg data-type="chatDel" width="24" height="24" role="img"><title>删除</title><use xlink:href="#delIcon" /></svg></div>`
             if (appendChat) chatListEle.appendChild(chatEle);
             initChatEle(idx, chatEle);
@@ -4063,13 +4063,13 @@
             return chatEle;
         };
         const addNewChat = () => {
-            let chat = {name: "新的会话", data: []};
+            let chat = {name: "new session", data: []};
             chatsData.push(chat);
             chatIdxs.push(chatsData.length - 1);
             updateChats();
         };
         const delChat = (idx, ele, folderIdx, inFolderIdx) => {
-            if (confirmAction("是否删除会话?")) {
+            if (confirmAction("Delete this?")) {
                 if (idx === activeChatIdx) endAll();
                 if (folderIdx !== void 0) {
                     let folder = folderData[folderIdx];
@@ -4469,7 +4469,7 @@
             })
         };
         clearChatSet.onclick = clearChat.onclick = () => {
-            if (confirmAction("是否清空所有会话和文件夹?")) {
+            if (confirmAction("Do you want to clear all sessions and folders?")) {
                 chatsData.length = 0;
                 chatIdxs.length = 0;
                 folderData.length = 0;
@@ -4521,7 +4521,7 @@
             })
         };
         document.getElementById("resetSet").onclick = () => {
-            if (confirmAction("是否还原所有设置为默认值?")) {
+            if (confirmAction("Restore all settings to default?")) {
                 endAll();
                 let data = {};
                 for (let i = 0; i < localSetKeys.length; i++) {
@@ -4753,7 +4753,7 @@
                     checkCustomTheme();
                 } else {
                     ele.value = customDarkTime[idx];
-                    notyf.error("开始时间和结束时间不能相同！");
+                    notyf.error("Start time and end time cannot be the same！");
                 }
             }
             customStart.onchange = function () {handleAutoTime(this, 0)};
@@ -5458,7 +5458,7 @@
         const streamGen = async (long) => {
             controller = new AbortController();
             controllerId = setTimeout(() => {
-                notyf.error("请求超时，请稍后重试！");
+                notyf.error("The request timed out, please try again later！");
                 stopLoading();
             }, 120000);
             let isRefresh = refreshIdx !== void 0;
@@ -5514,15 +5514,15 @@
                 controllerId = void 0;
                 if (res.status !== 200) {
                     if (res.status === 401) {
-                        notyf.error("API密钥错误或失效，请检查API密钥！")
+                        notyf.error("The API key is incorrect or invalid, please check the API key!")
                     } else if (res.status === 400 || res.status === 413) {
-                        notyf.error("请求内容过大，请删除部分对话或打开设置关闭连续对话！");
+                        notyf.error("The content of the request is too large, please delete part of the conversation or open the settings to close the continuous conversation!");
                     } else if (res.status === 404) {
-                        notyf.error("无权使用此模型，请打开设置选择其他GPT模型！");
+                        notyf.error("Not authorized to use this model, please open the settings to choose another GPT model！");
                     } else if (res.status === 429) {
-                        notyf.error(res.statusText ? "触发API调用频率限制，请稍后重试！" : "API使用超出限额，请检查您的账单！");
+                        notyf.error(res.statusText ? "Triggered API call rate limit, please try again later!" : "API usage exceeded limit, please check your bill!");
                     } else {
-                        notyf.error("网关错误或超时，请稍后重试！");
+                        notyf.error("Gateway error or timeout, please try again later!");
                     }
                     stopLoading();
                     return;
